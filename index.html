@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+
+.row {
+        margin: 1em 1.5em 0em 2.5em;
+		background-color: #fff;
+		border: 1px solid #939393;
+		border-radius: 1px;
+		
+      }
+.country:hover{
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+.text{
+  font-size:10px;
+  text-transform:capitalize;
+}
+	
+.path{
+stroke:white;
+}
+
+#container {
+ position:relative;
+  stroke: #fff;
+  stroke-width: 1px;
+  stroke-opacity: .4;
+  margin-right: -2%;
+  height:100%; 
+  overflow:hidden;
+
+  background-color:transparent; 
+  margin-top:1%;
+  width:43%;
+   -moz-border-radius: 100px / 50px;
+  -webkit-border-radius: 100px / 50px;
+ float:right;
+ 
+ 
+} 
+
+#map{
+
+margin: 0em 1.5em 1.5em 2.5em;
+background-color: #ffffff;
+		border: 1px solid #ffffff;
+		border-radius: 1px;
+		
+} 
+
+#demoTab1,#demoTab2,#demoTab3,#demoTab4,#demoTab5,#demoTab6 {
+    	width: 100px;
+        font-size: 34px;
+        text-align: center;
+ 
+        padding-bottom:63px;
+        
+        position:relative;
+        height:12px;
+        float:left;
+        margin-top:-9.5em;
+}
+ #demoTab1 {
+        background: #aec6cf;
+        margin-left: 60px;
+      
+        
+      }
+     	
+ #demoTab2 {
+        background: #9ab973;
+        margin-left: 195px;
+        
+      }
+     
+     #demoTab3 {
+        background: #ffc87c;
+ margin-left: 325px;
+      
+        
+      }
+ #demoTab4 {
+        background: #997a8d;
+        
+        
+      }
+      #number-box,#number-box1,#number-box2,#number-box3,#number-box4,#number-box5,#number-box6,#number-box7,#number-box8,#number-box9,#number-box10,#number-box11,#number-box12,#number-box13,#number-box14,#number-box15 {
+    width: 100px;
+        font-size: 34px;
+        text-align: center;
+        padding-top: 13px;
+        margin-left: 3px;
+        padding-bottom: 63px;
+        
+        height:12px;
+}
+
+ #number-box {
+        background: #aec6cf;
+    margin-left: 60px;
+      
+        
+      }
+ 
+       #number-box {
+        background: #ed81a1;
+        
+        
+      }
+      
+      
+.resetall{
+ float: left;
+ margin-right:1%;
+ margin-top:1%;
+  font-family:Palatino;
+  font-size:20px;
+  color:#000000;
+}
+
+
+       .btn .glyphicon + span {
+				margin-left: .2em;
+			}
+
+</style>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Demographics of Crime</title>
+       <link rel="icon" type="image/jpeg" href="static/images/crime_favicon.jpg" />
+
+     <!-- Bootstrap -->
+    <link href="static/css/sh.css" rel="stylesheet">
+    <link href="static/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/dc.css" media="screen" />
+	<link rel="stylesheet" href="static/css/starter-template.css" media="screen" />
+	<link rel="stylesheet" href="static/css/d3_tip.css" media="screen" />
+	
+<!--<link rel="stylesheet" href="static/css/charts.css" media="screen" />-->
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body onload="checkStorage()">
+    <h1 >Crime & Demography - England & Wales (2011-2014)</h1>
+<div class="row"><ul class="nav nav-tabs">
+  <!--<li role="presentation" class="active"><a href="#">2014</a></li>
+  <li role="presentation"><a href="#">2013</a></li>
+  <li role="presentation"><a href="#">2012-2011</a></li>-->
+</ul>
+         
+  <div><img src="static/Images/police.jpg" alt="Police force selection" width="15%" height="86%" style="float: left;margin-left:52%;margin-top:1%;"></div>
+ 
+  <div><img src="static/Images/key.png" alt="Color Key Matrix" width="10%" height="6%" style="float: right;margin-right:9%;margin-top:10%;"></div>
+       <div class="input-prepend input-append" style="float: right;margin-right:-12%;margin-top:2%;">
+        <div class="btn-group" >
+
+            <button class="btn dropdown-toggle" name="recordinput" data-toggle="dropdown" style="width:15em;background:#dfc27d;">
+            All Crime
+            <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                  <li><a href="#">Anti-Social Behaviour</a></li>
+                  <li><a href="#">Burglary</a></li>
+                  <li><a href="#">Criminal Damage and Arson</a></li>
+                  <li><a href="#">Drugs</a></li>
+                
+                  <li><a href="#">Robbery</a></li>
+                   <li><a href="#">Shoplifting</a></li>
+                  
+                  <li><a href="#">Vehicle Crime</a></li>
+                  <li><a href="#">Other Theft</a></li>
+                  <li><a href="#">Other Crime</a></li>
+                  <li class="divider"></li>
+        			 <li><a href="#">All Crime</a></li>
+                  
+            </ul>
+             </div>
+    </div>
+
+     <!--   <span class="resetall">
+       <a class="resetall" href="javascript:dc.filterAll(); dc.redrawAll();" style="float: right;">Reset All</a>
+	</span>-->
+<div><br></br> </div>
+
+  
+       <div id="wrapper">
+         <h6>Demographic Categories</h6>
+      <div id="star" class="button dialog-open">
+          <img src="static/Images/Aicon.png" alt="Aicon" width="100%" height="100%">
+   
+      </div>
+      <div id="anchor" class="button dialog-open">
+       <img src="static/Images/Bicon.png" alt="Bicon" width="100%" height="100%">
+   
+      </div>
+      <div id="beaker" class="button dialog-open">
+        <img src="static/Images/Cicon.png" alt="Cicon" width="100%" height="100%">
+   
+      </div>
+      <div id="bug" class="button dialog-open">
+   <img src="static/Images/Dicon.png" alt="Dicon" width="100%" height="100%">
+   
+      </div>
+            <div id="E" class="button dialog-open">
+   <img src="static/Images/Eicon.png" alt="Eicon" width="100%" height="100%">
+   
+      </div>
+          <div id="F" class="button dialog-open">
+       <img src="static/Images/Ficon.png" alt="Ficon" width="100%" height="100%">
+   
+      </div>
+          <div id="G" class="button dialog-open">
+       <img src="static/Images/Gicon.png" alt="Gicon" width="100%" height="100%">
+   
+      </div>
+          <div id="H" class="button dialog-open">
+       <img src="static/Images/Hicon.png" alt="Hicon" width="100%" height="100%">
+   
+      </div>
+          <div id="I" class="button dialog-open">
+       <img src="static/Images/Iicon.png" alt="Iicon" width="100%" height="100%">
+   
+      </div>
+          <div id="J" class="button dialog-open">
+       <img src="static/Images/Jicon.png" alt="Jicon" width="100%" height="100%">
+   
+      </div>
+       <div id="K" class="button dialog-open">
+        <img src="static/Images/Kicon.png" alt="Kicon" width="100%" height="100%">
+   
+      </div>
+     
+      <div id="L" class="button dialog-open">
+        <img src="static/Images/Licon.png" alt="Licon" width="100%" height="100%">
+   
+      </div>
+     
+      <div id="M" class="button dialog-open">
+        <img src="static/Images/Micon.png" alt="Micon" width="100%" height="100%">
+   
+      </div>
+     
+      <div id="N" class="button dialog-open">
+        <img src="static/Images/Nicon.png" alt="Nicon" width="100%" height="100%">
+   
+      </div>
+     
+      <div id="O" class="button dialog-open">
+        <img src="static/Images/Oicon.png" alt="Oicon" width="100%" height="100%">
+   
+      </div>
+      <div id="U" class="button dialog-open">
+        <img src="static/Images/Uicon.png" alt="Uicon" width="100%" height="100%">
+   
+      </div>
+     
+    </div>
+    <div  id="container">
+     
+        <!--<a class="reset" href="javascript:usChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>-->
+        <!--<span class="reset" style="display: none;"> | Current filter: <span class="filter"></span></span>-->
+       
+
+    </div> 
+  
+   
+    
+     <textarea id="textdisplay4"  readonly>
+     ************** Summary Info *************
+       </textarea>
+       
+       
+      <textarea id="textdisplay"  readonly>
+      Police force: Please select a region on the map
+       </textarea>
+
+  <textarea id="textdisplay2"  readonly>
+     High vol. offences (Top 3): Please select a region
+       </textarea>
+
+ <textarea id="textdisplay3" readonly>
+     Demographic groups(Top 3): Please select a region
+       </textarea>
+
+    
+    <div id="overlay">
+      <div id="screen"></div>
+      <div id="dialog-star" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/AClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+        <div id="dialog-anchor" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/BClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+         <div id="dialog-beaker" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/CClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+        <div id="dialog-bug" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/DClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+       <div id="dialog-E" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/EClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+           <div id="dialog-F" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/FClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+                <div id="dialog-G" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/GClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+             <div id="dialog-H" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/HClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+             <div id="dialog-I" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/IClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+          <div id="dialog-J" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/JClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+         <div id="dialog-K" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/KClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+            <div id="dialog-L" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/LClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+         <div id="dialog-M" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/MClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+         <div id="dialog-N" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/NClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+         <div id="dialog-O" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/OClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+         <div id="dialog-U" class="dialog">
+        <div class="body-dialog">
+         <img src="static/Images/UClass.png" alt="X-axis label" width="100%" height="100%">
+        </div>
+        <div class="ok-dialog">x<i class="icon-ok-sign"></i></div>
+      </div>
+     </div>
+     </div>
+
+   
+</div>
+
+  
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="static/js/jquery.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/d3.v3.min.js"></script>
+<script src="static/js/crossfilter.js"></script>
+<script src="static/js/dc.js"></script>
+<script src="static/js/TweenLite.min.js"></script>
+		
+<script src="static/js/topojson.v1.min.js"></script>
+<!--<script src="http://d3js.org/queue.v1.min.js"></script>-->
+<script src="static/js/d3.geo.projection.v0.min.js"></script>
+<script type="text/javascript" >
+function resetOpa(){
+  $('#star').css('opacity',  1);
+               $('#anchor').css('opacity',  1);
+                $('#beaker').css('opacity', 1);
+                 $('#bug').css('opacity',   1);
+                   $('#E').css('opacity',   1);
+               $('#F').css('opacity',  1);
+                $('#G').css('opacity',  1);
+                 $('#H').css('opacity',   1);
+                     $('#I').css('opacity', 1);
+               $('#J').css('opacity', 1);
+                $('#K').css('opacity', 1);
+                 $('#L').css('opacity', 1);
+                     $('#M').css('opacity',  1);
+               $('#N').css('opacity',  1);
+                $('#O').css('opacity',  1);
+                 $('#U').css('opacity',  1);
+};
+function checkStorage(){
+if (typeof(Storage) == "undefined" ) {
+  		      alert("Your browser does not support HTML5 localStorage. Try upgrading.");
+			} 
+		else {
+ 	 		    console.log("Both localStorage and sessionStorage support is there.");
+	    	   	 window.localStorage.clear();
+  	  	
+			
+		      //window.localStorage["myOpacity"] = JSON.stringify(opacity);
+		    window.localStorage["mapFNAME"] = "static/data/ProbabilityMap_AllCrime2.csv";
+		     // window.localStorage["clusteringID"] = "Supervised";
+ 		 
+		}
+
+};
+
+$(".dropdown-menu li a").click(function(){
+  var selText = $(this).text();
+  if(selText=="Anti-Social Behaviour"){
+   window.localStorage.clear();
+   window.localStorage["mapFNAME"] = "static/data/ProbabilityMap_AntiSocialCrime2.csv";
+ 
+  }
+  if(selText=="Burglary"){
+   window.localStorage.clear();
+   window.localStorage["mapFNAME"] = "static/data/ProbabilityMap_Burglary2.csv";
+
+  }
+  if(selText=="Robbery"){
+   window.localStorage.clear();
+   window.localStorage["mapFNAME"] = "static/data/ProbabilityMap_OtherCrime.csv";
+
+  }
+  if(selText=="Vehicle Crime"){
+   window.localStorage.clear();
+   window.localStorage["mapFNAME"] = "static/data/ProbabilityMap_VehicleCrime.csv";
+
+  }
+  if(selText=="Other Crime"){
+   window.localStorage.clear();
+   window.localStorage["mapFNAME"] = "static/data/ProbabilityMap_Robbery.csv";
+  
+  }
+  if(selText=="Criminal Damage and Arson"){
+   window.localStorage.clear();
+   window.localStorage["mapFNAME"] = "static/data/ProbabilityMap_CriminalDamage.csv";
+   
+  }
+ if(selText=="Drugs"){
+  window.localStorage.clear();
+   window.localStorage["mapFNAME"] = "static/data/ProbabilityMap_Drugs.csv";
+  
+  } 
+   if(selText=="Other Theft"){
+    window.localStorage.clear();
+   window.localStorage["mapFNAME"] = "static/data/ProbabilityMap_OtherTheft.csv";
+   
+  } 
+   if(selText=="Shoplifting"){
+    window.localStorage.clear();
+   window.localStorage["mapFNAME"] = "static/data/ProbabilityMap_Shoplifting.csv";
+
+  } 
+    if(selText=="All Crime"){
+     window.localStorage.clear();
+   window.localStorage["mapFNAME"] = "static/data/ProbabilityMap_AllCrime2.csv";
+
+  } 
+  console.log(selText);
+  resetOpa(); 
+   load();
+  $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+  
+});
+// Custom namespace
+var modal = {};
+modal.hide = function() {
+  $('#overlay').fadeOut();
+  $('.dialog').fadeOut();
+};
+
+$(document).ready(function() {
+
+  // Open appropriate dialog when clicking on anything with class "dialog-open"
+  $('.dialog-open').click(function() {
+    modal.id = '#dialog-' + this.id;
+    $('#overlay').fadeIn();
+    $(modal.id).fadeIn();
+  });
+  // Close dialog when clicking on the "ok-dialog"
+  $('.ok-dialog').click(function() {
+    modal.hide();
+  });
+  // Require the user to click OK if the dialog is classed as "modal"
+  $('#overlay').click(function() {
+    if ($(modal.id).hasClass('modal')) {
+      // Do nothing
+    } else {
+      modal.hide();
+    }
+  });
+  // Prevent dialog closure when clicking the body of the dialog (overrides closing on clicking overlay)
+  $('.dialog').click(function() {
+    event.stopPropagation();
+  });
+});
+
+  //Display boxes for demand frequencies
+/*  var boxND = dc.numberDisplay("#number-box");
+  var boxND1 = dc.numberDisplay("#number-box1");
+  var boxND2 = dc.numberDisplay("#number-box2");
+  var boxND3 = dc.numberDisplay("#number-box3");
+  var boxND4 = dc.numberDisplay("#number-box4");
+  var boxND5 = dc.numberDisplay("#number-box5");
+  var boxND6 = dc.numberDisplay("#number-box6");
+  var boxND7 = dc.numberDisplay("#number-box7");
+ 
+  //Display boxes for enquiry frequencies
+  var boxND8 = dc.numberDisplay("#number-box8");
+  var boxND9 = dc.numberDisplay("#number-box9");
+  var boxND10 = dc.numberDisplay("#number-box10");
+  var boxND11 = dc.numberDisplay("#number-box11");
+  var boxND12 = dc.numberDisplay("#number-box12");
+  var boxND13 = dc.numberDisplay("#number-box13");
+  var boxND14 = dc.numberDisplay("#number-box14");
+  var boxND15 = dc.numberDisplay("#number-box15");
+*/
+ 
+ /*
+var dataset = [];
+var graticule = d3.geo.graticule();
+
+latDem= []
+Dem = []
+WA = []
+ll = []
+pval = []
+tau = []
+
+
+countries=[]
+coloursnew=[]
+
+var width = document.getElementById('container').offsetWidth;
+var height = width / 2;
+
+*/
+
+//var industryChart = dc.rowChart("#industry-chart");
+//var industryChart1 = dc.rowChart("#industry1-chart");
+//var corrChart = dc.bubbleChart("#corr-chart");
+
+load = function() {
+
+var colorVec=[]
+var   countries=[]
+
+var  opacityVec1=[]
+var opacityVec2=[]
+var opacityVec3=[]
+var  opacityVec4=[]
+var  opacityVec5=[]
+var  opacityVec6=[]
+var  opacityVec7=[]
+var  opacityVec8=[]
+var  opacityVec9=[]
+var  opacityVec10=[]
+var  opacityVec11=[]
+var  opacityVec12=[]
+var  opacityVec13=[]
+var  opacityVec14=[]
+var  opacityVec15=[]
+var  opacityVec16=[]
+var  topcrime=[]
+var  demo=[]
+   
+var WardsM = dc.geoChoroplethChart("#container");
+
+var fname=localStorage["mapFNAME"] || "static/data/ProbabilityMap_AllCrime2.csv";
+
+
+
+
+WardsM.filterAll();
+dc.redrawAll();
+    
+d3.csv(fname, function(error, csv) {
+
+console.log(fname);
+
+csv.forEach(function(d,i) {
+   d.Index = i;
+   //latDem.push(d.latDem);
+    countries.push(d.PoliceForce);
+    opacityVec1.push(d.A);
+    opacityVec2.push(d.B);
+    opacityVec3.push(d.C);
+    opacityVec4.push(d.D);
+    opacityVec5.push(d.E);
+    opacityVec6.push(d.F);
+    opacityVec7.push(d.G);
+    opacityVec8.push(d.H);
+    opacityVec9.push(d.I);
+    opacityVec10.push(d.J);
+    opacityVec11.push(d.K);
+    opacityVec12.push(d.L);
+    opacityVec13.push(d.M);
+    opacityVec14.push(d.N);
+    opacityVec15.push(d.O);
+    opacityVec16.push(d.U);
+    topcrime.push(d.res);
+    demo.push(d.res_pop);
+     colorVec.push(d.Colour);
+    //console.log(d.res);
+   
+  
+    
+    //pval.push(d.pval);
+    //tau.push(d.tau);
+ 
+   
+   });
+ //WA.push(csv)
+
+         
+         
+ d3.json("static/data/EngWalesPoliceForces.json", function (statesJson) {
+
+/********************************************************
+*														*
+* 	Step2:	Run data through crossfilter				*
+*														*
+********************************************************/
+    var data = crossfilter(csv); 
+   
+// For datatable
+
+
+/********************************************************
+*														*
+* 	Step3: 	Create Dimension that we'll need			*
+*														*
+********************************************************/
+
+    var country = data.dimension(function (d) {
+          // console.log(d.PoliceForce);
+            return d.PoliceForce;  
+        });
+
+    var countrygp = country.group().reduceSum(function (d) {
+           // console.log(d.Index+1);    
+            return (d.Index);
+         });
+
+
+
+
+    var width = 590;
+    var height = 600;
+
+
+
+
+
+    var projection = d3.geo.mercator()
+    .center([0,40])
+.scale(3900)
+.rotate([-1,-13]);
+      //  .scale(290)
+       // .translate([width/2.5, height]);
+    
+
+	
+
+	WardsM.width(width)
+                    .height(height)
+                    .dimension(country)
+                    .group(countrygp) 
+                    .projection(projection)
+                    .colors(colorVec)
+         .colorDomain([0,42])
+         .colorCalculator(function (d) { return d ? WardsM.colors()(d) : '#8c2d04'; })
+                  .overlayGeoJson(statesJson.features, "state", function (d) {
+                      // console.log("Here entering json",d.properties.name);
+                      
+                        return d.properties.name;
+                    })
+                      .title(function (d) {
+                     // console.log(d.key);
+                    return d.key ;
+                })
+            
+             .on("filtered", function (chart) {
+       
+          
+             
+              var row =countries.indexOf(chart.filters()[(chart.filters().length)-1])
+               if(chart.filters().length>=2){
+             for (var j = 0; j < (chart.filters().length-1); j++){
+          
+                  //console.log(chart.filters());
+                  chart.filter(chart.filters()[j]);
+                
+              }//end of removing filters
+             }//end of if loop*/
+             
+             if(chart.filters().length==0)
+             {
+        
+             $('#star').css('opacity',  1);
+               $('#anchor').css('opacity',  1);
+                $('#beaker').css('opacity', 1);
+                 $('#bug').css('opacity',   1);
+                   $('#E').css('opacity',   1);
+               $('#F').css('opacity',  1);
+                $('#G').css('opacity',  1);
+                 $('#H').css('opacity',   1);
+                     $('#I').css('opacity', 1);
+               $('#J').css('opacity', 1);
+                $('#K').css('opacity', 1);
+                 $('#L').css('opacity', 1);
+                     $('#M').css('opacity',  1);
+               $('#N').css('opacity',  1);
+                $('#O').css('opacity',  1);
+                 $('#U').css('opacity',  1);
+                 console.log("here");
+                 document.getElementById("textdisplay").value = "      Police Force: Please select a region ";
+                   document.getElementById("textdisplay2").value = "     High Vol. Offences (Top 3): Please select a region";
+                 console.log(topcrime[row]);
+                  document.getElementById("textdisplay3").value = "     Demographics (Top 3): Please select a region";
+             
+                 }//end of reset opacity
+                 
+                 
+           //   console.log(opacityVec1[row]);
+              $('#star').css('opacity',   opacityVec1[row]);
+               $('#anchor').css('opacity',   opacityVec2[row]);
+                $('#beaker').css('opacity',   opacityVec3[row]);
+                 $('#bug').css('opacity',   opacityVec4[row]);
+                   $('#E').css('opacity',   opacityVec5[row]);
+               $('#F').css('opacity',   opacityVec6[row]);
+                $('#G').css('opacity',   opacityVec7[row]);
+                 $('#H').css('opacity',   opacityVec8[row]);
+                     $('#I').css('opacity',   opacityVec9[row]);
+               $('#J').css('opacity',   opacityVec10[row]);
+                $('#K').css('opacity',   opacityVec11[row]);
+                 $('#L').css('opacity',   opacityVec12[row]);
+                     $('#M').css('opacity',   opacityVec13[row]);
+               $('#N').css('opacity',   opacityVec14[row]);
+                $('#O').css('opacity',   opacityVec15[row]);
+                 $('#U').css('opacity',   opacityVec16[row]);
+                console.log(chart.filters());
+                if(chart.filters().length>0){
+                document.getElementById("textdisplay").value = "      Police Force: " + chart.filters();
+                 document.getElementById("textdisplay2").value = "     High Vol. Offences (Top 3): " + topcrime[row];
+                 console.log(topcrime[row]);
+                  document.getElementById("textdisplay3").value = "     Demographics (Top 3): " + demo[row];
+                }
+                 
+		    });
+		    
+         //  $(window).resize(function() {
+// super fast, but doesn't redraw the x & y axis'	
+///dc.redrawAll();});         
+
+
+			
+    dc.renderAll();
+ 
+
+  	    
+  });
+
+
+        
+        });//end of json
+    
+//});
+
+}//end of load
+
+load()
+
+ </script>
+
+  </body>
+</html>
